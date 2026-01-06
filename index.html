@@ -63,6 +63,67 @@
             opacity: 0.8;
         }
 
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.8rem;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 70px;
+            left: 0;
+            right: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 1rem 0;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            z-index: 999;
+        }
+
+        .mobile-menu.active {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+
+        .mobile-menu ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .mobile-menu li {
+            padding: 0;
+        }
+
+        .mobile-menu a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 1rem 2rem;
+            transition: background 0.3s;
+            font-size: 1.1rem;
+        }
+
+        .mobile-menu a:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
         /* Hero Section */
         .hero {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -70,12 +131,38 @@
             padding: 8rem 2rem 6rem;
             text-align: center;
             margin-top: 70px;
+            position: relative;
+        }
+
+        .urgency-badge {
+            background: #ff4757;
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 25px;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 1.5rem;
+            animation: pulse 2s infinite;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(255, 71, 87, 0.7);
+            }
+            50% {
+                transform: scale(1.05);
+                box-shadow: 0 0 0 10px rgba(255, 71, 87, 0);
+            }
         }
 
         .hero h1 {
             font-size: 3rem;
             margin-bottom: 1rem;
             animation: fadeInUp 0.8s ease;
+            line-height: 1.2;
         }
 
         .hero p {
@@ -83,6 +170,13 @@
             margin-bottom: 2rem;
             opacity: 0.95;
             animation: fadeInUp 0.8s ease 0.2s backwards;
+        }
+
+        .hero-subtext {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            animation: fadeInUp 0.8s ease 0.3s backwards;
         }
 
         .cta-button {
@@ -341,6 +435,19 @@
             .nav-links {
                 display: none;
             }
+
+            .mobile-menu-toggle {
+                display: block;
+            }
+
+            .features h2, .process h2, .cta-section h2, .faq h2 {
+                font-size: 1.8rem;
+            }
+
+            .whatsapp-button {
+                padding: 1rem 2rem;
+                font-size: 1rem;
+            }
         }
     </style>
 </head>
@@ -358,39 +465,63 @@
                 <li><a href="#faq">FAQ</a></li>
                 <li><a href="#contato">Contato</a></li>
             </ul>
+            <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">☰</button>
         </nav>
     </header>
 
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <ul>
+            <li><a href="#inicio" onclick="closeMobileMenu()">Início</a></li>
+            <li><a href="#servicos" onclick="closeMobileMenu()">Serviços</a></li>
+            <li><a href="#processo" onclick="closeMobileMenu()">Como Funciona</a></li>
+            <li><a href="#faq" onclick="closeMobileMenu()">FAQ</a></li>
+            <li><a href="#contato" onclick="closeMobileMenu()">Contato</a></li>
+        </ul>
+    </div>
+
     <!-- Hero Section -->
     <section class="hero" id="inicio">
-        <h1>Vistoria de Gás Segura e Confiável</h1>
-        <p>Agende sua vistoria de instalação de gás com profissionais certificados</p>
-        <a href="#contato" class="cta-button">Agendar Agora</a>
+        <div class="urgency-badge">⚠️ ATENÇÃO: PRAZO VENCENDO EM BREVE!</div>
+        <h1>Vistoria de Gás Residencial e Predial</h1>
+        <p>Evite multas e garanta a segurança! Atendemos casas, apartamentos, condomínios e prédios comerciais</p>
+        <p class="hero-subtext">✓ Residencial ✓ Predial ✓ Comercial ✓ Laudo em 48h</p>
+        <a href="#contato" class="cta-button">Agendar Minha Vistoria Agora</a>
     </section>
 
     <!-- Features Section -->
     <section class="features" id="servicos">
-        <h2>Por Que Escolher Nossos Serviços?</h2>
+        <h2>Vistoria Completa para Residências e Prédios</h2>
         <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🏠</div>
+                <h3>Residencial</h3>
+                <p>Casas, apartamentos, sobrados e kitinets com instalação individual de gás</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🏢</div>
+                <h3>Predial e Condomínios</h3>
+                <p>Prédios residenciais, comerciais e condomínios com central de gás</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">⏰</div>
+                <h3>Prazo Acabando</h3>
+                <p>Não deixe para última hora! Evite multas e problemas com a distribuidora</p>
+            </div>
             <div class="feature-card">
                 <div class="feature-icon">✅</div>
                 <h3>Profissionais Certificados</h3>
-                <p>Equipe qualificada e certificada pelos órgãos reguladores</p>
+                <p>Equipe qualificada para todos os tipos de instalação</p>
             </div>
             <div class="feature-card">
                 <div class="feature-icon">⚡</div>
-                <h3>Atendimento Rápido</h3>
-                <p>Agendamento facilitado e atendimento em até 48 horas</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">🛡️</div>
-                <h3>Segurança Garantida</h3>
-                <p>Seguimos todas as normas técnicas e de segurança</p>
+                <h3>Atendimento Urgente</h3>
+                <p>Agendamento prioritário para residências e condomínios</p>
             </div>
             <div class="feature-card">
                 <div class="feature-icon">📋</div>
-                <h3>Laudo Técnico</h3>
-                <p>Emissão de laudo detalhado após a vistoria</p>
+                <h3>Laudo Técnico Completo</h3>
+                <p>Documentação para residências, prédios e distribuidoras</p>
             </div>
             <div class="feature-card">
                 <div class="feature-icon">💰</div>
@@ -434,19 +565,65 @@
 
     <!-- CTA Section -->
     <section class="cta-section" id="contato">
-        <h2>Pronto Para Agendar Sua Vistoria?</h2>
-        <p>Entre em contato agora mesmo pelo WhatsApp e garanta sua segurança</p>
-        <a href="https://wa.me/5511999999999?text=Olá!%20Gostaria%20de%20agendar%20uma%20vistoria%20de%20gás." class="whatsapp-button" target="_blank">
-            📱 Agendar pelo WhatsApp
+        <h2>⚠️ Vistoria Residencial e Predial - Não Perca o Prazo!</h2>
+        <p><strong>Atendemos:</strong> Casas | Apartamentos | Condomínios | Prédios Comerciais | Indústrias</p>
+        <p style="font-size: 1.1rem; margin: 1.5rem 0;">
+            ❌ Multas de até R$ 5.000<br>
+            ❌ Suspensão do fornecimento de gás<br>
+            ❌ Problemas com seguro residencial e predial<br>
+            ❌ Riscos à segurança dos moradores
+        </p>
+        <p style="font-size: 1.3rem; font-weight: bold; margin-bottom: 2rem;">
+            ✅ Agende hoje sua vistoria residencial ou predial com apenas 1 clique!
+        </p>
+        <a href="https://wa.me/5511999999999?text=Olá!%20Preciso%20agendar%20URGENTE%20uma%20vistoria%20de%20gás%20(residencial/predial).%20O%20prazo%20está%20acabando!" class="whatsapp-button" target="_blank">
+            📱 Agendar Vistoria URGENTE pelo WhatsApp
         </a>
-        <p style="margin-top: 1rem; font-size: 0.9rem; opacity: 0.8;">
-            Atendimento de Segunda a Sexta das 8h às 18h
+        <p style="margin-top: 1.5rem; font-size: 1rem; opacity: 0.9;">
+            ⚡ Atendimento prioritário para residências e condomínios<br>
+            📞 Resposta em até 2 horas | Vistoria em até 48 horas
         </p>
     </section>
 
     <!-- FAQ Section -->
     <section class="faq" id="faq">
         <h2>Perguntas Frequentes</h2>
+        <div class="faq-item">
+            <div class="faq-question" onclick="toggleFaq(this)">
+                Qual a diferença entre vistoria residencial e predial?
+                <span>+</span>
+            </div>
+            <div class="faq-answer">
+                A vistoria residencial é para casas e apartamentos com instalação individual. Já a vistoria predial é para prédios e condomínios com central de gás coletiva, verificando toda a rede de distribuição, tubulações e medidores.
+            </div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-question" onclick="toggleFaq(this)">
+                Meu condomínio precisa fazer vistoria?
+                <span>+</span>
+            </div>
+            <div class="faq-answer">
+                Sim! Condomínios com central de gás precisam realizar vistoria predial periodicamente. O síndico é responsável por agendar e garantir que a vistoria esteja em dia para evitar suspensão do fornecimento.
+            </div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-question" onclick="toggleFaq(this)">
+                O que acontece se eu perder o prazo da vistoria?
+                <span>+</span>
+            </div>
+            <div class="faq-answer">
+                Se o prazo vencer, você pode receber multas que variam de R$ 500 a R$ 5.000, ter o fornecimento de gás suspenso e ainda enfrentar problemas com o seguro residencial. Por isso é fundamental agendar o quanto antes!
+            </div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-question" onclick="toggleFaq(this)">
+                Como sei quando vence minha vistoria?
+                <span>+</span>
+            </div>
+            <div class="faq-answer">
+                A distribuidora de gás envia notificações por carta ou e-mail informando o prazo. Geralmente, a vistoria deve ser realizada a cada 5 anos para instalações residenciais. Entre em contato conosco que verificamos o prazo para você!
+            </div>
+        </div>
         <div class="faq-item">
             <div class="faq-question" onclick="toggleFaq(this)">
                 O que é vistoria de gás?
@@ -490,7 +667,14 @@
         <div class="footer-content">
             <div class="footer-section">
                 <h3>Sobre Nós</h3>
-                <p>Empresa especializada em vistorias de instalações de gás com mais de 10 anos de experiência no mercado.</p>
+                <p>Empresa especializada em vistorias residenciais e prediais de instalações de gás com mais de 10 anos de experiência no mercado.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Nossos Serviços</h3>
+                <p>✓ Vistoria Residencial</p>
+                <p>✓ Vistoria Predial</p>
+                <p>✓ Vistoria para Condomínios</p>
+                <p>✓ Laudo Técnico Certificado</p>
             </div>
             <div class="footer-section">
                 <h3>Contato</h3>
@@ -518,6 +702,16 @@
     </footer>
 
     <script>
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('active');
+        }
+
+        function closeMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.remove('active');
+        }
+
         function toggleFaq(element) {
             const faqItem = element.parentElement;
             const isActive = faqItem.classList.contains('active');
@@ -547,6 +741,18 @@
                     });
                 }
             });
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const menu = document.getElementById('mobileMenu');
+            const toggle = document.querySelector('.mobile-menu-toggle');
+            
+            if (menu.classList.contains('active') && 
+                !menu.contains(event.target) && 
+                !toggle.contains(event.target)) {
+                menu.classList.remove('active');
+            }
         });
     </script>
 </body>
